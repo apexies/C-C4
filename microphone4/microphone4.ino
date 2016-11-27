@@ -1,3 +1,6 @@
+// attribution: Basic peak-to-peak reading code for microphone, Bill Earl https://learn.adafruit.com/adafruit-microphone-amplifier-breakout/measuring-sound-levels 
+// attribution: Basic smoothing / averages code, Arduino.cc https://www.arduino.cc/en/Tutorial/Smoothing 
+
 #include "config.h"
 const int sampleWindow = 100;            // Sample window width in mS 
 unsigned int sample;
