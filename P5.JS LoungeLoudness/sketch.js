@@ -1,3 +1,4 @@
+// attribution for foundation of code : Nick Puckett, OCAD University https://www.dropbox.com/home/C%26C-example%20files/Exp4/aiotop5
 
 var sensorVal1;
 
