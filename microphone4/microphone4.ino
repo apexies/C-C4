@@ -1,14 +1,9 @@
-/****************************************
-Example Sound Level Sketch for the 
-Adafruit Microphone Amplifier
-****************************************/
 #include "config.h"
-const int sampleWindow = 100; // Sample window width in mS 
+const int sampleWindow = 100;            // Sample window width in mS 
 unsigned int sample;
 int sendRate = 5000;
 int prevsample;
 int thresholdmedium = 600;
-
 
 const int numReadings = 50;              // Take average of every 50 readings
 int readings[numReadings];               // readings from analog input
@@ -47,37 +42,36 @@ void setup() {
 void loop() {
     io.run();
     
-   unsigned long startMillis= millis();  // Start of sample window
-   unsigned int peakToPeak = 0;   // peak-to-peak level
+   unsigned long startMillis= millis();                // Start of sample window
+   unsigned int peakToPeak = 0;                       // peak-to-peak level
  
    unsigned int signalMax = 0;
    unsigned int signalMin = 1024;
  
-   // collect data for 500 mS
-   while (millis() - startMillis < sampleWindow)
+   while (millis() - startMillis < sampleWindow)       // collect data for 100 mS
    {
       sample = analogRead(0);
-      if (sample < 1024)  // toss out spurious readings
+      if (sample < 1024)                             // ignore bad readings above 1024
       {
          if (sample > signalMax)
          {
-            signalMax = sample;  // save just the max levels
+            signalMax = sample;                     // save just the max levels
          }
          else if (sample < signalMin)
          {
-            signalMin = sample;  // save just the min levels
+            signalMin = sample;                    // save just the min levels
          }
       }
    }
-   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+   peakToPeak = signalMax - signalMin;             // max - min = peak-peak amplitude
 
   total = total - readings[readIndex];
   readings[readIndex] = analogRead(peakToPeak);       // read from peak to peak calculation
-  total = total + readings[readIndex];                  // add the reading to the total
+  total = total + readings[readIndex];                // add the reading to the total
   readIndex = readIndex + 1;                          // advance to the next position in the array
 
   if (readIndex >= numReadings) {                     // if we're at the end of the array...
-    readIndex = 0;                                   // ...wrap around to the beginning:
+    readIndex = 0;                                   // ...wrap around to the beginning
   }
 
   // calculate the average:
@@ -85,9 +79,9 @@ void loop() {
   // send it to the computer
    Serial.print("sending -> ");
    Serial.println(average);
-    delay(1);        // delay in between reads for stability
-    Microphone->save(average);                         // save average peak-peak amplitude to the 'Microphone' feed on Adafruit IO
+    delay(1);                                        // delay in between reads for stability
+    Microphone->save(average);                       // save average peak-peak amplitude to the 'Microphone' feed on Adafruit IO
   
-  prevsample=sample;                              //save microphone state for next comparison: 
+  prevsample=sample;                                //save microphone state for next comparison: 
 }
 
